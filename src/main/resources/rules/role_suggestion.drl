@@ -1,0 +1,25 @@
+package rules;
+
+import com.example.demo.model.Applicant;
+import com.example.demo.model.SuggestedRole;
+
+global com.example.demo.model.SuggestedRole suggestedRole; // Define the global variable
+
+dialect  "mvel"
+
+rule "Suggest Manager Role"
+    when
+        Applicant(experienceInYears > 10)
+        Applicant(currentSalary > 1000000 && currentSalary <= 2500000)
+    then
+        suggestedRole.setRole("Manager");
+end
+
+
+rule "Suggest Senior Developer Role"
+    when
+        Applicant(experienceInYears >= 5 && experienceInYears <= 10)
+        Applicant(currentSalary > 500000 && currentSalary <= 1000000)
+    then
+        suggestedRole.setRole("Senior Developer");
+end
